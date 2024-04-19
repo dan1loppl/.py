@@ -1,0 +1,106 @@
+from abc import ABC, abstractmethod
+
+def linha():
+    print("===" * 50)
+
+class Ct:
+    obj_count = 0
+
+    @classmethod
+    def get_obj_count(cls):
+        return cls.obj_count
+
+    def __init__(self):
+        Ct.obj_count += 1
+
+class Vehicle(ABC, Ct):
+    def __init__(self, marca, model, year):
+        super().__init__()
+        self.marca = marca
+        self.model = model
+        self.year = year
+
+    @abstractmethod
+    def getValue(self):
+        pass
+
+    def details(self):
+        return f" Marca: {self.marca},\n Modelo: {self.model},\n Ano: {self.year}"
+
+    def show_details(self):
+        print(self.details())
+
+class Car(Vehicle):
+    def __init__(self, marca, model, year, color):
+        super().__init__(marca, model, year)
+        self.color = color
+        self.value = None
+
+    def getValue(self):
+        return self.value
+    
+    def setValue(self, value):
+        self.value = value
+
+    def details(self):
+        return f"{super().details()},\n Cor: {self.color},"
+
+class Motorcycle(Vehicle):
+    def __init__(self, marca, model, year, displacement):
+        super().__init__(marca, model, year)
+        self.displacement = displacement
+        self.value = None
+
+    def getValue(self):
+        return self.value
+    
+    def setValue(self, value):
+        self.value = value
+
+    def details(self):
+        return f"{super().details()}, \n Cilindradas: {self.displacement},"
+
+if __name__ == "__main__":
+    car = Car("Toyota", "Corolla", 2020, "Black")
+    car.value = 20000
+
+    motorcycle = Motorcycle("Honda", "CBR500R", 2021, 500)
+    motorcycle.value = 10000
+
+    car2 = Car("Ford", "Fiesta", 2018, "White")
+    moto2 = Motorcycle("kawasaki", "Ninja", 2018, 1000)
+
+    car3 = Car("Chevrolet", "Onix", 2019, "Red")
+    moto3 = Motorcycle("Yamaha", "R1", 2019, 1000)
+
+    print("Veiculos : ")
+
+
+    linha()
+
+    print("Carro :")
+    print(car.details())
+    print(" Valor do carro:", car.getValue())
+
+    linha()
+
+    print("Moto :")
+    print(motorcycle.details())
+    print(" Valor da motocicleta:", motorcycle.getValue())
+
+    linha()
+
+    print("Carro 2 :")
+    print(car2.details())
+    print(" Valor do carro:", car2.getValue())
+
+    linha()
+
+    print("Moto 2 :")
+    print(moto2.details())
+    print(" Valor da motocicleta:", moto2.getValue())
+
+    linha()
+
+    print("Quantidade de veiculos cadastrados:", Ct.get_obj_count())
+    
